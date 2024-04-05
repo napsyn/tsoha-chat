@@ -1,4 +1,4 @@
-# Hacklab-blogi
+# Hackfeed - hakkerien blogi
 Ideana on erään kaupungin Hacklabin keskustelupalsta, joka toimii sisäisen toiminnan blogina. Jäsenet voivat luota uusia julkaisuja, missä
 he kertovat vaikkapa juuri valmistuneen löylykauhan tekovaiheista. Julkaisuille voi antaa avainsanoja, joilla niitä voidaan kategorisoida ja listata rajausten avulla.
 Julkaisuissa näkyy sisällön lisäksi käyttäjänimi, julkaisuaika, sekä kommentit. 
