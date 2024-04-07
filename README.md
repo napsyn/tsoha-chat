@@ -7,7 +7,7 @@ Päänäkymä kirjautuessa näyttää muutaman viimeisimmistä julkaisuista, jot
 
 Ylläpitäjillä on oikeus hallinnoida käyttäjiä ja sisältöä, sekä antaa moderointioikeuksia perustason käyttäjille.
 
-Sovellus on vielä hieman karu, mutta siinä toimii jo käyttäjien hallinta ja julkiasujen luominen/hakeminen. Julkaisuihin tulee vielä huomattavia muutoksia, sillä
+Sovellus on vielä hieman karu, mutta siinä toimii jo käyttäjien hallinta ja julkiasujen luominen/hakeminen. Julkaisuihin tulee vielä huomattavia muutoksia, ja
 tajusin ettei ole mitään järkeä näyttää julkaisun sisältöä listauksessa. Tulen vaihtamaan listauksessa sisällön tilalle julkaisun otsikon, jonka käyttäjä syöttää
 tehdessä julkaisua. Lisäsin juuri kategoriat ja käyttäjätasot, mutten ehtinyt testata niitä, joten älkää ihmetelkö.
 
