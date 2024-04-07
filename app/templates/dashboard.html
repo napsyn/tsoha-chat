@@ -3,10 +3,16 @@
 {% block content %}
 <title>Dashboard</title>
 <h1>Dashboard</h1>
+{% if session.user_id %}
 <table>
     {%for item in items%}
     <tr>
         <td class="table_content">{{ item }} {% endfor %}</td>
     </tr>
 </table>
+{% else %}
+<div>
+    <b>Log in to see content</b>
+</div>
+{% endif %}
 {% endblock %}

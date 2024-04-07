@@ -1,9 +1,20 @@
 <!doctype html>
-<title>Hackerblog - {% block title %}{% endblock %}</title>
-<h1>Hackerblog</h1>
-<a href="/dashboard">Dashboard</a>
-<a href="/login">Login</a>
+<title>Hackerfeed - {% block title %}{% endblock %}</title>
+<h1>Hackerfeed</h1>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% if session.user_id %}
+  <a href="/dashboard">Dashboard</a> | <a href="/logout">Log out</a>
+  {% else %}
+  <a href="/login">Log in</a>
+{% endif %}
 <hr>
 {% block content %}{% endblock %}
 <hr>
-Footer
