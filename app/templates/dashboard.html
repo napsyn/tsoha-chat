@@ -7,9 +7,19 @@
 <table>
     {%for item in items%}
     <tr>
-        <td class="table_content">{{ item }} {% endfor %}</td>
+        <td class="table_content"><p>{{ item[0] }} <b>{{ item[1] }}</b> Created at: {{ item[2].strftime("%d-%m-%Y %S:%M:%H") }}</p> {% endfor %}</td>
     </tr>
 </table>
+<h2>Write a new post</h2>
+<form action="/newpost" method="post">
+   <textarea name="content">
+   </textarea>
+    <input type="submit" value="New post">
+</form>
+
+<div>
+
+</div>
 {% else %}
 <div>
     <b>Log in to see content</b>

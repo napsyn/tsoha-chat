@@ -1,6 +1,6 @@
 from app import app
 from flask import redirect, render_template, request, flash, session
-import users
+import users, posts
 
 @app.route("/")
 def index():
@@ -24,8 +24,8 @@ def logout():
 
 @app.route("/dashboard")
 def dashboard():
-    testitems = ["moi", "testi", "jee"]
-    return render_template("dashboard.html", items=testitems)
+    items = posts.get_posts()
+    return render_template("dashboard.html", items=items)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -45,3 +45,11 @@ def register():
         else:
             error = "Registration failed"
             return render_template("error.html", error=error)
+
+@app.route("/newpost", methods=["POST"])
+def new_post():
+    content = request.form["content"]
+    if posts.create_post(content):
+        return redirect("/dashboard")
+    else:
+        return render_template("error.html", message="An error occurred in creating a new post")
