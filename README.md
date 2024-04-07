@@ -11,6 +11,8 @@ Sovellus on vielä hieman karu, mutta siinä toimii jo käyttäjien hallinta ja 
 tajusin esimerkiksi, ettei ole mitään järkeä näyttää julkaisun sisältöä listauksessa. Tulen vaihtamaan listauksessa sisällön tilalle julkaisun otsikon, jonka käyttäjä syöttää
 tehdessä julkaisua. Lisäsin juuri kategoriat ja käyttäjätasot, mutten ehtinyt testata niitä, joten älkää ihmetelkö.
 
+Sovelluksessa voi nyt testata kirjautumista ja julkaisujen tekoa. Käyttöliittymä on hyvin supraviivainen, joten sen kanssa ei pitäisi tulla ongelmia.
+
 Komennot käynnistykseen:
 
 python3 -m venv venv
