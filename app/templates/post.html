@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<title>Dashboard</title>
+<h1>Dashboard</h1>
+{% if session.user_id %}
+<h1>{{ title }}</h1>
+<b>{{ date.strftime("%d-%m-%Y %H:%M:%S") }}</b>
+<div>
+{{ content }}
+</div>
+{% else %}
+<div>
+    <b>Log in to see content</b>
+</div>
+{% endif %}
+{% endblock %}

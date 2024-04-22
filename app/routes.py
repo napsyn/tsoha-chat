@@ -25,6 +25,7 @@ def logout():
 @app.route("/dashboard")
 def dashboard():
     items = posts.get_posts()
+    print(items[0])
     return render_template("dashboard.html", items=items)
 
 @app.route("/register", methods=["GET", "POST"])
@@ -49,7 +50,16 @@ def register():
 @app.route("/newpost", methods=["POST"])
 def new_post():
     content = request.form["content"]
-    if posts.create_post(content):
+    title = request.form["title"]
+    if posts.create_post(title, content):
         return redirect("/dashboard")
     else:
         return render_template("error.html", message="An error occurred in creating a new post")
+    
+@app.route("/post/<post_id>")
+def get_post(post_id):
+    res = posts.get_post(post_id)
+    if not res:
+        return flash("Oops, something went wrong")
+    else:
+        return render_template("post.html", title=res[0], content=res[1], date=res[2])

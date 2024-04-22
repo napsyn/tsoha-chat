@@ -19,5 +19,5 @@
 {% block content %}{% endblock %}
 <hr>
 {%if session.user_id%}
-<p>Logged in as <b>User</b> //TODO place username here</p>
+<p>Logged in as <b>{{ session.username }}</b></p>
 {% endif %}

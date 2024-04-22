@@ -2,21 +2,28 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
     password TEXT
-    utype INTEGER REFERENCES user_roles
 );
 CREATE TABLE posts (
-    id SERIAL PRIMARY KEY,
+    post_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
+    title TEXT,
     content TEXT,
-    category INTEGER REFERENCES categories
     created_at TIMESTAMP
 );
 CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,
-    desc TEXT
+    category_id SERIAL PRIMARY KEY,
+    alias TEXT
 );
-CREATE TABLE user_roles (
+CREATE TABLE post_categories (
+    post_id SERIAL PRIMARY KEY REFERENCES posts,
+    category_id SERIAL REFERENCES categories
+);
+CREATE TABLE permission_levels (
     id SERIAL PRIMARY KEY,
-    desc TEXT,
-    utype INTEGER
+    alias TEXT,
+    user_type INTEGER
+);
+CREATE TABLE users_roles (
+    id SERIAL PRIMARY KEY REFERENCES users,
+    user_type INTEGER REFERENCES permission_levels
 );
