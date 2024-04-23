@@ -1,7 +1,8 @@
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    created_at TIMESTAMP
 );
 CREATE TABLE posts (
     post_id SERIAL PRIMARY KEY,
@@ -19,11 +20,14 @@ CREATE TABLE post_categories (
     category_id SERIAL REFERENCES categories
 );
 CREATE TABLE permission_levels (
-    id SERIAL PRIMARY KEY,
-    alias TEXT,
-    user_type INTEGER
+    user_type SERIAL PRIMARY KEY,
+    alias TEXT
 );
-CREATE TABLE users_roles (
-    id SERIAL PRIMARY KEY REFERENCES users,
+CREATE TABLE user_roles (
+    user_id SERIAL PRIMARY KEY REFERENCES users,
     user_type INTEGER REFERENCES permission_levels
 );
+
+INSERT INTO permission_levels (user_type, alias) VALUES(100, 'user');
+INSERT INTO permission_levels (user_type, alias) VALUES(200, 'moderator');
+INSERT INTO permission_levels (user_type, alias) VALUES(300, 'admin');

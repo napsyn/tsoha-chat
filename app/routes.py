@@ -1,6 +1,6 @@
-from app import app
-from flask import redirect, render_template, request, flash, session
+from flask import redirect, render_template, request, flash
 import users, posts
+from app import app
 
 @app.route("/")
 def index():
@@ -25,7 +25,6 @@ def logout():
 @app.route("/dashboard")
 def dashboard():
     items = posts.get_posts()
-    print(items[0])
     return render_template("dashboard.html", items=items)
 
 @app.route("/register", methods=["GET", "POST"])
@@ -56,10 +55,19 @@ def new_post():
     else:
         return render_template("error.html", message="An error occurred in creating a new post")
     
-@app.route("/post/<post_id>")
+@app.route("/post/<post_id>", methods=["GET","POST","DELETE"])
 def get_post(post_id):
-    res = posts.get_post(post_id)
-    if not res:
+    if request.method == "DELETE":
+        posts.delete_post(post_id)
+        return redirect("dashboard")
+    
+    result = posts.get_post(post_id)
+
+    if not result:
         return flash("Oops, something went wrong")
     else:
-        return render_template("post.html", title=res[0], content=res[1], date=res[2])
+        return render_template("post.html", title=result[0], content=result[1], date=result[2])
+    
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
