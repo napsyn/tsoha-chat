@@ -7,7 +7,7 @@
 <table>
     {%for item in items%}
     <tr>
-        <td class="table_content"><p><a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Created at: {{ item[4].strftime("%d-%m-%Y %H:%M:%S") }}</p> {% endfor %}</td>
+        <td class="table_content"><p><a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}</p> {% endfor %}</td>
     </tr>
 </table>
 <h2>Write a new post</h2>

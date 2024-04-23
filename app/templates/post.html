@@ -3,8 +3,8 @@
 {% block content %}
 <title>Dashboard</title>
 {% if session.user_id %}
+<p>Published: <b>{{ date.strftime("%d-%m-%Y %H:%M") }}</b></p>
 <h1>{{ title }}</h1>
-<b>{{ date.strftime("%d-%m-%Y %H:%M:%S") }}</b>
 <div>
 {{ content }}
 </div>
