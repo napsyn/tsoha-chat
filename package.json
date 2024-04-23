@@ -1,0 +1,15 @@
+{
+  "name": "tsoha-hackfeed",
+  "version": "1.0.0",
+  "description": "Ideana on sovellus, joka toimii hakkeritoiminnan blogina hacklabeille, tekijätiloille ja hakkerimielisille. Jäsenet voivat luoda uusia julkaisuja, missä he kertovat vaikkapa juuri valmistuneen löylykauhan tekovaiheista. Julkaisuille voi antaa avainsanoja, joilla niitä voidaan kategorisoida ja listata rajausten avulla. Julkaisuissa näkyy sisällön lisäksi käyttäjänimi, julkaisuaika, sekä kommentit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

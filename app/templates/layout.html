@@ -1,20 +1,28 @@
 <!doctype html>
+<link href="{{url_for('static',filename='/output.css')}}" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Hackfeed - {% block title %}{% endblock %}</title>
-<h1>Hackfeed</h1>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-{% if session.user_id %}
-  <a href="/dashboard">Dashboard</a> | <a href="/settings">Settings</a> | <a href="/logout">Log out</a>
-  {% else %}
-  <a href="/login">Log in</a>
-{% endif %}
+
+<div class="flex flex-col items-center justify-center mt-0 mb-10">
+  <div class="bg-slate-500 h-full p-4">
+    <h1 class="text-3xl">Hackfeed</h1>
+  </div>
+    {% if session.user_id %}
+    <div class="flex flex-row items-center justify-center w-1/3 h-11 bg-slate-300 border-solid rounded-none my-2">
+      <a href="/dashboard">Dashboard</a> | <a href="/settings">Settings</a> | <a href="/logout">Log out</a>
+    </div>
+    {% endif %}
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+</div>
 <hr>
 {% block content %}{% endblock %}
 <hr>

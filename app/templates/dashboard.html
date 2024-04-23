@@ -1,3 +1,4 @@
+<!doctype html>
 {% extends "layout.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
@@ -12,10 +13,10 @@
 </table>
 <h2>Write a new post</h2>
 <form action="/newpost" method="post">
-   <input type="text" name="title"></input>
+   <input type="text" name="title" required></input>
    <br>
    <br>
-   <textarea name="content" rows="20" cols="50"></textarea>
+   <textarea name="content" rows="20" cols="50" required></textarea>
    <br>
     <input type="submit" value="Publish post">
 </form>
