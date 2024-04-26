@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Hackfeed - {% block title %}{% endblock %}</title>
-
-<div class="flex flex-col items-center justify-center mt-0 mb-10">
+<body class="bg-slate-100">
+<div class="flex flex-col items-center bg justify-center mt-0 mb-10">
   <div class="bg-slate-500 h-full p-4">
     <h1 class="text-3xl">Hackfeed</h1>
   </div>
@@ -24,8 +24,11 @@
   {% endwith %}
 </div>
 <hr>
-{% block content %}{% endblock %}
+<div class="h-2/3 bg-white">
+  {% block content %}{% endblock %}
+</div>
 <hr>
 {%if session.user_id%}
 <p>Logged in as <b>{{ session.username }}</b></p>
 {% endif %}
+</body>
