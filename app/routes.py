@@ -73,9 +73,9 @@ def get_post(post_id):
         return render_template("post.html", title=result[0], content=result[1], date=result[2])
     
 @app.route("/userposts")
-def settings():
+def user_posts():
     return render_template("user_posts.html")
 
 @app.route("/manageusers")
-def settings():
+def manage_users():
     return render_template("admin_view.html")
