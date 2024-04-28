@@ -3,25 +3,29 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <title>Dashboard</title>
-<h1>Dashboard</h1>
-{% if session.user_id %}
-<table>
-    {%for item in items%}
-    <tr>
-        <td class="table_content"><p><a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}</p> {% endfor %}</td>
-    </tr>
-</table>
-<h2>Write a new post</h2>
-<form action="/newpost" method="post">
-   <input type="text" name="title" required></input>
-   <br>
-   <br>
-   <textarea name="content" rows="20" cols="50" required></textarea>
-   <br>
-    <input type="submit" value="Publish post">
-</form>
-
-<div>
+<div class="flex flex-col items-center justify-center">
+    <p class="text-xl mt-4">Dashboard</p>
+    {% if session.user_id %}
+    <table class="border-solid border-8 bg-slate-200 border-collapse shadow-md mb-4 mt-2">
+        {%for item in items%}
+        <tr>
+            <td class="table_content">
+                <p class="">
+                    <a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}
+                </p> 
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p class="text-xl">Write a new post</p>
+    <form class="mb-6" action="/newpost" method="post">
+        <div class="flex flex-col items-center justify-center mt-2">
+            <input class="border-solid border-2 rounded-sm mb-4 p-1" type="text" name="title" required placeholder="Title"></input>
+            <textarea class="border-solid border-2 rounded-md mb-4" name="content" rows="10" cols="50" required></textarea>
+            <button class="bg-amber-500 rounded-sm shadow-md pl-2 pr-2 pt-1 pb-1 m-1"" type="submit">Publish post</button>
+            <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
+        </div>
+    </form>
 
 </div>
 {% else %}

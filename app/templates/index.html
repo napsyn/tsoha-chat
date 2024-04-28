@@ -2,12 +2,20 @@
 {% extends "layout.html" %}
 {% block title %}Community{% endblock %}
 {% block content %}
-<title></title>
-<div>
-    <h1>Welcome</h1>
-    <p>
-        Hackfeed is a social platform for pleople interested in dong stuff!
-    </p>
-    <a href="/login">Log in</a>
+<title>Welcome</title>
+<div class="h-96 flex flex-col items-center justify-center pt-4 pb-6">
+    <h1 class="text-4xl">Welcome!</h1>
+    <div class="m-2">
+        <p>
+            Hackfeed is a social platform for pleople interested in dong stuff.
+            <br>
+            Share the things you've made and discover what others are up to!
+        </p>
+    </div>
+    {% if session.user_id == Flase %}
+    <div>
+        <p><a class="text-blue-500" href="/login">Log in</a> or <a class="text-blue-500" href="/register">Register</a></p>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

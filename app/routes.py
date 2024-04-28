@@ -32,22 +32,26 @@ def register():
     error = None
     if request.method == "GET":
         return render_template("register.html")
+    
     if request.method == "POST":
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+
         if password1 != password2:
-            error = "Mismatching passwords"
-            return render_template("error.html", error=error)
+            return flash("Mismatching passwords")
+        
         if users.register(username, password1):
             flash('Account succesfully created')
             return redirect("/login")
         else:
-            error = "Registration failed"
-            return render_template("error.html", error=error)
+            return flash("Registration failed")
 
 @app.route("/newpost", methods=["POST"])
 def new_post():
+    if not request.form['csrf_token']:
+        return flash("Post creation failed")
+    
     content = request.form["content"]
     title = request.form["title"]
     if posts.create_post(title, content):
@@ -68,6 +72,10 @@ def get_post(post_id):
     else:
         return render_template("post.html", title=result[0], content=result[1], date=result[2])
     
-@app.route("/settings")
+@app.route("/userposts")
 def settings():
-    return render_template("settings.html")
+    return render_template("user_posts.html")
+
+@app.route("/manageusers")
+def settings():
+    return render_template("admin_view.html")

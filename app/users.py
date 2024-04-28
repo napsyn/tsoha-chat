@@ -2,6 +2,7 @@ from db import db
 from flask import session, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy.sql import text
+import secrets
 
 def login(username, password):
     sql = text("SELECT user_id, password FROM users WHERE username=:username")
@@ -29,6 +30,7 @@ def login(username, password):
                 
             session["user_id"] = user.user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return True
         else:
             return False
@@ -67,9 +69,9 @@ def create_role(user):
         return False
     
 def get_users():
-    sql = text("SELECT U.username, R.user_type, U.created_at FROM users U, user_roles R WHERE U.user_id=R.user_id AND R.user_type=300")
+    sql = text("SELECT U.username, R.user_type, U.created_at FROM users U, user_roles R WHERE U.user_id=R.user_id")
     if session.user.user_type == 300:
-        result = db.session.execute()
+        result = db.session.execute(sql)
         return result.fetchall()
     else:
         return False
