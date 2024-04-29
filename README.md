@@ -7,11 +7,6 @@ Päänäkymä kirjautuessa näyttää muutaman viimeisimmistä julkaisuista, jot
 
 Ylläpitäjillä on oikeus hallinnoida käyttäjiä ja sisältöä, sekä antaa moderointioikeuksia perustason käyttäjille.
 
-Sovellus on vielä hieman karu, mutta siinä toimii jo käyttäjien hallinta ja julkiasujen luominen/hakeminen. Julkaisuihin tulee vielä huomattavia muutoksia ––
-tajusin esimerkiksi, ettei ole mitään järkeä näyttää julkaisun sisältöä listauksessa. Tulen vaihtamaan listauksessa sisällön tilalle julkaisun otsikon, jonka käyttäjä syöttää
-tehdessä julkaisua. Lisäsin juuri kategoriat ja käyttäjätasot, mutten ehtinyt testata niitä, joten älkää ihmetelkö.
-
-Sovelluksessa voi nyt testata kirjautumista ja julkaisujen tekoa. Käyttöliittymä on hyvin supraviivainen, joten sen kanssa ei pitäisi tulla ongelmia.
 
 Komennot käynnistykseen:
 
@@ -26,6 +21,10 @@ Lisää enviin ympäristömuuttujat
 psql < schema.sql
 
 flask run
+
+# Dev
+
+npx tailwindcss -i ./app/static/main.css -o ./app/static/output.css --watch (Tyylien muutoksiin tarvittava komento, kehityksessä '--watch' mukaan)
 
 
 

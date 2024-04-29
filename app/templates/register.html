@@ -2,15 +2,17 @@
 {% extends "layout.html" %}
 {% block title %}Register{% endblock %}
 {% block content %}
-<form action="/register" method="post">
-    Username: <input type="text" name="username">
-    <p>
-    Password: <input type="password" name="password1">
-    <p>
-    Password again: <input type="password" name="password2">
-    <p>
-    <input type="submit" value="Create user">
-</form>
+<div class="h-96 flex flex-col items-center justify-center pt-4 pb-6">
+    <form action="/register" method="post">
+        Username: <input type="text" name="username">
+        <p>
+        Password: <input type="password" name="password1">
+        <p>
+        Password again: <input type="password" name="password2">
+        <p>
+        <input type="submit" value="Create user">
+    </form>
+</div>
 {% endblock %}
 {% if error %}
 <p class=error><strong>Error:</strong> {{ error }}

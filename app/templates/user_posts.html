@@ -2,7 +2,23 @@
 {% extends "layout.html" %}
 {% block title %}Settings{% endblock %}
 {% block content %}
-<div class="flex flex-col items-center justify-center">
-    <h1 class="text-xl mt-4">My posts</h1>
+<div class="flex flex-col h-96 items-center">
+    <h1 class="text-xl mt-8 mb-2">My posts</h1>
+    {% if session.user_id %}
+    <div class="flex flex-col ">
+        {%for item in items%}
+            <div class="bg-slate-200 flex items-center justify-center border-solid border-2 h-8 shadow-md m-1 p-2">
+                <div class="">
+                    <a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> Published: {{ item[3].strftime("%d-%m-%Y") }}
+                    <a href={{url_for("delete_post", post_id=item[0])}} class="text-red-500 border-solid rounded-sm">Delete</a>
+                </div>
+            </div>
+        {% endfor %}   
+    </div>
 </div>
+{% else %}
+<div>
+    <b>Log in to see content</b>
+</div>
+{% endif %}
 {% endblock %}

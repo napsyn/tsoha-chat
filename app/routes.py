@@ -59,7 +59,7 @@ def new_post():
     else:
         return render_template("error.html", message="An error occurred in creating a new post")
     
-@app.route("/post/<post_id>", methods=["GET","POST","DELETE"])
+@app.route("/post/<post_id>", methods=["GET","POST"])
 def get_post(post_id):
     if request.method == "DELETE":
         posts.delete_post(post_id)
@@ -74,8 +74,17 @@ def get_post(post_id):
     
 @app.route("/userposts")
 def user_posts():
-    return render_template("user_posts.html")
+    items = posts.user_posts()
+    return render_template("user_posts.html", items=items)
 
 @app.route("/manageusers")
 def manage_users():
     return render_template("admin_view.html")
+
+@app.route("/delete/<post_id>")
+def delete_post(post_id):
+    if not posts.delete_post(post_id):
+        return flash("An error occurred")
+    else:
+        flash("Post deleted")
+        return redirect("/userposts")

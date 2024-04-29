@@ -4,20 +4,17 @@
 {% block content %}
 <title>Dashboard</title>
 <div class="flex flex-col items-center justify-center">
-    <p class="text-xl mt-4">Dashboard</p>
+    <p class="text-xl mt-8 mb-2">Dashboard</p>
     {% if session.user_id %}
-    <table class="border-solid border-8 bg-slate-200 border-collapse shadow-md mb-4 mt-2">
+    <div class="flex flex-col ">
         {%for item in items%}
-        <tr>
-            <td class="table_content">
-                <p class="">
-                    <a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}
-                </p> 
-            </td>
-        </tr>
+            <div class="bg-slate-200 flex items-center justify-center border-solid border-2 h-8 shadow-md m-1 p-2">
+                <div><a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}</div>
+            </div>
         {% endfor %}
-    </table>
-    <p class="text-xl">Write a new post</p>
+        
+    </div>
+    <p class="text-xl mt-2">Write a new post</p>
     <form class="mb-6" action="/newpost" method="post">
         <div class="flex flex-col items-center justify-center mt-2">
             <input class="border-solid border-2 rounded-sm mb-4 p-1" type="text" name="title" required placeholder="Title"></input>

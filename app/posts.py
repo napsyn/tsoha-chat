@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 import users
 
 def get_posts():
-    sql = text("SELECT P.post_id, P.title, P.content, U.username, P.created_at FROM posts P, users U WHERE P.user_id=U.user_id ORDER BY P.post_id")
+    sql = text("SELECT P.post_id, P.title, P.content, U.username, P.created_at FROM posts P JOIN users U ON P.user_id=U.user_id ORDER BY P.created_at")
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -29,3 +29,22 @@ def delete_post(post_id):
     sql = text("DELETE FROM posts WHERE post_id=:post_id")
     result = db.session.execute(sql, {"post_id" : post_id})
     return result
+
+def user_posts():
+    sql = text("SELECT post_id, title, content, created_at FROM posts WHERE posts.user_id=:user_id ORDER BY created_at")
+    id = users.user_id()
+
+    if not id:
+        return False
+    else:
+        result = db.session.execute(sql, {'user_id': id})
+        return result.fetchall()
+
+def delete_post(post_id):
+    sql = text("DELETE from posts WHERE posts.post_id=:post_id")
+    if not post_id:
+        return False
+    else:
+        db.session.execute(sql, {'post_id': post_id})
+        db.session.commit()
+        return True
