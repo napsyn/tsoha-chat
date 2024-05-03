@@ -53,11 +53,8 @@ def user_id():
 def is_logged():
     return session.get("username", 0)
 
-def is_admin():
-    return session.get("admin")
-
-def is_moderator():
-    return session.get("moderator")
+def user_type():
+    return session.get('user_type')
 
 def create_role(user):
     sql = text("INSERT INTO user_roles (user_id, user_type) VALUES(:user_id,:user_type)")
@@ -68,10 +65,37 @@ def create_role(user):
         return False
     
 def get_users():
-    sql = text("SELECT U.username, R.user_type, U.created_at FROM users U, user_roles R WHERE U.user_id=R.user_id")
-    if session.user.user_type == 300:
-        result = db.session.execute(sql)
-        return result.fetchall()
-    else:
+    sql = text("SELECT U.user_id, U.username, R.user_type, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id WHERE NOT R.user_type=300")
+    if user_type() != 300:
         return False
+    else:
+        result = db.session.execute(sql)
+        
+        return result.fetchall()
+
+def role_options(type):
+    sql = text("SELECT user_type, alias FROM permission_levels WHERE NOT user_type=:type")
+    if user_type() != 300:
+        return False
+    else:
+        result = db.session.execute(sql, {'type': type})
+        return result.fetchall()
+
+def get_user(user_id):
+    sql = text("SELECT U.user_id, U.username, R.user_type, T.alias, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id JOIN permission_levels T ON R.user_type=T.user_type WHERE U.user_id=:user_id")
+    if user_type() != 300:
+        return False
+    else:
+        result = db.session.execute(sql, {"user_id": user_id})
+        return result.fetchone()
     
+def delete_user(user_id):
+    sql = text("DELETE FROM users WHERE user_id=:user_id")
+    try:
+        db.session.execute(sql, {"user_id", user_id})
+        db.session.commit()
+        return True
+    except:
+        return False
+
+# select U.user_id, U.username, R.user_type, T.alias, U.created_at FROM users U join user_roles R on U.user_id=R.user_id join permission_levels T on R.user_type=T.user_type;

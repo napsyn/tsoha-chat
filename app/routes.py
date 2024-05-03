@@ -29,7 +29,6 @@ def dashboard():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    error = None
     if request.method == "GET":
         return render_template("register.html")
     
@@ -79,7 +78,9 @@ def user_posts():
 
 @app.route("/manageusers")
 def manage_users():
-    return render_template("admin_view.html")
+    all_users = users.get_users()
+    print(all_users)
+    return render_template("admin_view.html", users=all_users)
 
 @app.route("/delete/<post_id>")
 def delete_post(post_id):
@@ -88,3 +89,17 @@ def delete_post(post_id):
     else:
         flash("Post deleted")
         return redirect("/userposts")
+    
+@app.route("/settings/<user_id>")
+def user_settings(user_id):
+    user_data = users.get_user(user_id)
+    print(user_data)
+    option1, option2 = users.role_options(user_data[2])
+    if not user_data:
+        return flash("User fetch failed")
+    else:
+        return render_template("user_data.html", user=user_data, option1=option1, option2=option2)
+    
+@app.route("/modify", methods=['GET', 'POST'])
+def modify_role():
+    return True

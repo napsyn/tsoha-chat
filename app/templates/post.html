@@ -1,13 +1,15 @@
 <!doctype html>
 {% extends "layout.html" %}
-{% block title %}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
-<title>Dashboard</title>
+
 {% if session.user_id %}
-<p>Published: <b>{{ date.strftime("%d-%m-%Y %H:%M") }}</b></p>
-<h1>{{ title }}</h1>
-<div>
-{{ content }}
+<div class="flex flex-col min-h-96 items-center">
+    <div class=" text-left w-2/5">
+        <h1 class="text-xl mt-8 font-bold">{{ title }}</h1>
+        <div class="text-xs mb-2">Published: <b>{{ date.strftime("%d-%m-%Y %H:%M") }}</b></div>
+        {{ content }}
+    </div>
 </div>
 {% else %}
 <div>

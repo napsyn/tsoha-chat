@@ -6,7 +6,7 @@ CREATE TABLE users (
 );
 CREATE TABLE posts (
     post_id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE,
     title TEXT,
     content TEXT,
     created_at TIMESTAMP
@@ -24,7 +24,7 @@ CREATE TABLE permission_levels (
     alias TEXT
 );
 CREATE TABLE user_roles (
-    user_id SERIAL PRIMARY KEY REFERENCES users,
+    user_id SERIAL PRIMARY KEY REFERENCES users ON DELETE CASCADE,
     user_type INTEGER REFERENCES permission_levels
 );
 

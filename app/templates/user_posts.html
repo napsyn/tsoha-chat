@@ -5,6 +5,12 @@
 <div class="flex flex-col h-96 items-center">
     <h1 class="text-xl mt-8 mb-2">My posts</h1>
     {% if session.user_id %}
+
+    {% if items|length < 1 %}
+    <div>
+        No content yet
+    </div>
+    {% else %}
     <div class="flex flex-col ">
         {%for item in items%}
             <div class="bg-slate-200 flex items-center justify-center border-solid border-2 h-8 shadow-md m-1 p-2">
@@ -15,6 +21,7 @@
             </div>
         {% endfor %}   
     </div>
+    {% endif %}
 </div>
 {% else %}
 <div>
