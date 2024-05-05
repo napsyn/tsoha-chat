@@ -82,8 +82,10 @@ def user_posts():
 @app.route("/manageusers")
 def manage_users():
     all_users = users.get_users()
-    print(all_users)
-    return render_template("admin_view.html", users=all_users)
+    if not all_users:
+        return redirect("/dashboard")
+    else:
+        return render_template("admin_view.html", users=all_users)
 
 @app.route("/delete/<post_id>")
 def delete_post(post_id):
@@ -96,7 +98,6 @@ def delete_post(post_id):
 @app.route("/settings/<user_id>")
 def user_settings(user_id):
     user_data = users.get_user(user_id)
-    print(user_data)
     option1, option2 = users.role_options(user_data[2])
     if not user_data:
         return flash("User fetch failed")

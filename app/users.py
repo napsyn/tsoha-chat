@@ -5,9 +5,6 @@ from sqlalchemy.sql import text
 import secrets
 
 def login(username, password):
-    if not username or password:
-        return False
-    
     sql = text("SELECT user_id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
@@ -41,9 +38,6 @@ def logout():
     del session["user_id"]
 
 def register(username, password):
-    if not username or password:
-        return False
-    
     hash_value = generate_password_hash(password)
     sql = text("INSERT INTO users (username, password, created_at) VALUES (:username, :password, NOW())")
     db.session.execute(sql, {"username":username, "password":hash_value})
@@ -72,24 +66,28 @@ def create_role(user):
     
 def get_users():
     id = user_id()
-    sql = text("SELECT U.user_id, U.username, P.alias, R.user_type, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id JOIN permission_levels P ON R.user_type=P.user_type WHERE NOT R.user_id=:user_id")
-    if user_type() != 300:
+    utype = user_type()
+    print(utype)
+    sql = text("SELECT U.user_id, U.username, P.alias, R.user_type, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id JOIN permission_levels P ON R.user_type=P.user_type WHERE NOT R.user_id=:user_id AND R.user_type <=:user_type")
+    if utype != 300 and utype != 200:
         return False
     else:
-        result = db.session.execute(sql, {'user_id': id})
+        result = db.session.execute(sql, {'user_id': id, 'user_type': utype})
         return result.fetchall()
 
 def role_options(type):
+    utype = user_type()
     sql = text("SELECT user_type, alias FROM permission_levels WHERE NOT user_type=:type")
-    if user_type() != 300:
+    if utype != 300 and utype != 200:
         return False
     else:
         result = db.session.execute(sql, {'type': type})
         return result.fetchall()
 
 def get_user(user_id):
+    utype = user_type()
     sql = text("SELECT U.user_id, U.username, R.user_type, T.alias, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id JOIN permission_levels T ON R.user_type=T.user_type WHERE U.user_id=:user_id")
-    if user_type() != 300:
+    if utype != 300 and utype != 200:
         return False
     else:
         result = db.session.execute(sql, {"user_id": user_id})
