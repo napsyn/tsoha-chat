@@ -9,7 +9,7 @@
         {%for user in users%}
             <div class="bg-slate-200 flex items-center justify-center border-solid border-2 h-8 shadow-md m-1 p-2">
                 <div class="">
-                    <b>{{ user[1] }}</b> User type: {{ user[2] }} Created: {{ user[3].strftime("%d-%m-%Y") }}
+                    <b>{{ user[1] }}</b> User type: {{ user[2] }} Created: {{ user[4].strftime("%d-%m-%Y") }}
                     <a href={{url_for("user_settings", user_id=user[0])}} class="text-blue-500 border-solid rounded-sm">Settings</a>
                 </div>
             </div>

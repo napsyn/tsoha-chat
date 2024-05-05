@@ -3,7 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <title>Dashboard</title>
-<div class="flex flex-col items-center justify-center">
+<div class="flex flex-col items-center justify-center min-h-96">
     <p class="text-xl mt-8 mb-2">Dashboard</p>
     {% if session.user_id %}
     {% if items|length < 1 %}
@@ -11,24 +11,40 @@
         No content yet
     </div>
     {% else %}
+    <div class="flex flex-row items-center justify-center">
+        <form action="/filter" method="post">
+            <label for="category">Filter by category:</label>
+            <select class="m-2" id="category" name="category">
+                {% for category in categories %}
+                <option value={{ category[0] }}>{{ category[1] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="bg-slate-400 rounded-sm py-0.5 px-1">Apply</button>
+        </form>
+    </div>
     <div class="flex flex-col ">
         {%for item in items%}
             <div class="bg-slate-200 flex items-center justify-center border-solid border-2 h-8 shadow-md m-1 p-2">
                 <div><a href={{url_for("get_post", post_id=item[0])}}><b>{{ item[1] }}</b></a> By: <b>{{ item[3] }}</b> Published: {{ item[4].strftime("%d-%m-%Y") }}</div>
             </div>
-        {% endfor %}
-        
+        {% endfor %}      
     </div>
+    {% endif %}
     <p class="text-xl mt-2">Write a new post</p>
     <form class="mb-6" action="/newpost" method="post">
         <div class="flex flex-col items-center justify-center mt-2">
-            <input class="border-solid border-2 rounded-sm mb-4 p-1" type="text" name="title" required placeholder="Title"></input>
+            <input class="border-solid border-2 rounded-sm mb-2 p-1" type="text" name="title" required placeholder="Title"></input>
+            <label for="post_category">Category</label>
+            <select class="mb-2" name="post_category" id="post_category">
+                {% for category in categories %}
+                <option value={{ category[0] }}>{{ category[1] }}</option>
+                {% endfor %}
+            </select>
             <textarea class="border-solid border-2 rounded-md mb-4" name="content" rows="10" cols="50" required></textarea>
             <button class="bg-amber-500 rounded-sm shadow-md pl-2 pr-2 pt-1 pb-1 m-1" type="submit">Publish post</button>
             <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
         </div>
     </form>
-    {% endif %}
 </div>
 {% else %}
 <div>

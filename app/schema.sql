@@ -16,7 +16,7 @@ CREATE TABLE categories (
     alias TEXT
 );
 CREATE TABLE post_categories (
-    post_id SERIAL PRIMARY KEY REFERENCES posts,
+    post_id SERIAL PRIMARY KEY REFERENCES posts ON DELETE CASCADE,
     category_id SERIAL REFERENCES categories
 );
 CREATE TABLE permission_levels (
@@ -31,3 +31,6 @@ CREATE TABLE user_roles (
 INSERT INTO permission_levels (user_type, alias) VALUES(100, 'user');
 INSERT INTO permission_levels (user_type, alias) VALUES(200, 'moderator');
 INSERT INTO permission_levels (user_type, alias) VALUES(300, 'admin');
+INSERT INTO categories (alias) VALUES('3D');
+INSERT INTO categories (alias) VALUES('Woodworking');
+INSERT INTO categories (alias) VALUES('Electronics');

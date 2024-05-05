@@ -5,6 +5,9 @@ from sqlalchemy.sql import text
 import secrets
 
 def login(username, password):
+    if not username or password:
+        return False
+    
     sql = text("SELECT user_id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
@@ -38,6 +41,9 @@ def logout():
     del session["user_id"]
 
 def register(username, password):
+    if not username or password:
+        return False
+    
     hash_value = generate_password_hash(password)
     sql = text("INSERT INTO users (username, password, created_at) VALUES (:username, :password, NOW())")
     db.session.execute(sql, {"username":username, "password":hash_value})
@@ -54,7 +60,7 @@ def is_logged():
     return session.get("username", 0)
 
 def user_type():
-    return session.get('user_type')
+    return session.get('user_type', 0)
 
 def create_role(user):
     sql = text("INSERT INTO user_roles (user_id, user_type) VALUES(:user_id,:user_type)")
@@ -65,12 +71,12 @@ def create_role(user):
         return False
     
 def get_users():
-    sql = text("SELECT U.user_id, U.username, R.user_type, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id WHERE NOT R.user_type=300")
+    id = user_id()
+    sql = text("SELECT U.user_id, U.username, P.alias, R.user_type, U.created_at FROM users U JOIN user_roles R ON U.user_id=R.user_id JOIN permission_levels P ON R.user_type=P.user_type WHERE NOT R.user_id=:user_id")
     if user_type() != 300:
         return False
     else:
-        result = db.session.execute(sql)
-        
+        result = db.session.execute(sql, {'user_id': id})
         return result.fetchall()
 
 def role_options(type):
@@ -91,11 +97,18 @@ def get_user(user_id):
     
 def delete_user(user_id):
     sql = text("DELETE FROM users WHERE user_id=:user_id")
+    db.session.execute(sql, {"user_id": user_id})
     try:
-        db.session.execute(sql, {"user_id", user_id})
         db.session.commit()
-        return True
     except:
         return False
+    return True
 
-# select U.user_id, U.username, R.user_type, T.alias, U.created_at FROM users U join user_roles R on U.user_id=R.user_id join permission_levels T on R.user_type=T.user_type;
+def modify_role(role, user_id):
+    sql = text("UPDATE user_roles SET user_type=:user_type WHERE user_id=:user_id")
+    db.session.execute(sql, {'user_type': role, 'user_id':user_id})
+    try:
+        db.session.commit()
+    except:
+        return False
+    return True

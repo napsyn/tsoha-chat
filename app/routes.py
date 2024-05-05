@@ -25,7 +25,8 @@ def logout():
 @app.route("/dashboard")
 def dashboard():
     items = posts.get_posts()
-    return render_template("dashboard.html", items=items)
+    categories = posts.get_categories()
+    return render_template("dashboard.html", items=items, categories=categories)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -33,9 +34,9 @@ def register():
         return render_template("register.html")
     
     if request.method == "POST":
-        username = request.form["username"]
-        password1 = request.form["password1"]
-        password2 = request.form["password2"]
+        username = request.form.get('username')
+        password1 = request.form.get('password')
+        password2 = request.form.get('password2')
 
         if password1 != password2:
             return flash("Mismatching passwords")
@@ -53,7 +54,9 @@ def new_post():
     
     content = request.form["content"]
     title = request.form["title"]
-    if posts.create_post(title, content):
+    post_category = request.form["post_category"]
+
+    if posts.create_post(title, content, post_category):
         return redirect("/dashboard")
     else:
         return render_template("error.html", message="An error occurred in creating a new post")
@@ -100,6 +103,33 @@ def user_settings(user_id):
     else:
         return render_template("user_data.html", user=user_data, option1=option1, option2=option2)
     
-@app.route("/modify", methods=['GET', 'POST'])
+@app.route("/user/modify", methods=['GET', 'POST'])
 def modify_role():
-    return True
+    if request.method == "POST":
+        role = request.form['role']
+        id = request.form['user_id']
+        print(role)
+        print(id)
+        if not users.modify_role(role, id):
+            return flash("Error modifying role")
+        else:
+            flash("Role modified")
+            return redirect("/manageusers")
+    else:
+        return redirect("/manegeusers")
+
+@app.route("/user/delete/<user_id>")
+def delete_user(user_id):
+    if not user_id:
+        return flash("Error deleting user")
+    if not users.delete_user(user_id):
+        return flash("Error deleting user")
+    else:
+        return redirect("/manageusers")
+
+@app.route("/filter", methods=['POST'])
+def filter_by_category():
+    category = request.form.get('category')
+    items_filtered = posts.filter_by_category(category)
+    categories = posts.get_categories()
+    return render_template("dashboard.html", items=items_filtered, categories=categories)
