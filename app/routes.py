@@ -41,6 +41,18 @@ def register():
         if password1 != password2:
             return flash("Mismatching passwords")
         
+        if len(username) < 4:
+            return flash("Username too short")
+        
+        if len(username) > 20:
+            return flash("Username too long")
+        
+        if len(password1) < 5:
+            return flash("Password too short")
+        
+        if len(password1) > 25:
+            return flash("Username too long")
+        
         if users.register(username, password1):
             flash('Account succesfully created')
             return redirect("/login")

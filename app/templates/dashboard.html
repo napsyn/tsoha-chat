@@ -33,14 +33,14 @@
     <p class="text-xl mt-2">Write a new post</p>
     <form class="mb-6" action="/newpost" method="post">
         <div class="flex flex-col items-center justify-center mt-2">
-            <input class="border-solid border-2 rounded-sm mb-2 p-1" type="text" name="title" required placeholder="Title"></input>
+            <input class="border-solid border-2 rounded-sm mb-2 p-1" type="text" name="title" min="1" max="20" required placeholder="Title"></input>
             <label for="post_category">Category</label>
             <select class="mb-2" name="post_category" id="post_category">
                 {% for category in categories %}
                 <option value={{ category[0] }}>{{ category[1] }}</option>
                 {% endfor %}
             </select>
-            <textarea class="border-solid border-2 rounded-md mb-4" name="content" rows="10" cols="50" required></textarea>
+            <textarea class="border-solid border-2 rounded-md mb-4" name="content" rows="10" cols="50" minlength="5" maxlength="500" required></textarea>
             <button class="bg-amber-500 rounded-sm shadow-md pl-2 pr-2 pt-1 pb-1 m-1" type="submit">Publish post</button>
             <input type="hidden" name="csrf_token" value={{session.csrf_token}}>
         </div>
